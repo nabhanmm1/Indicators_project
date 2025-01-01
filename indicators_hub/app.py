@@ -5,7 +5,7 @@ def main():
     st.title("Indicators Hub - Language Selection")
 
     # Dropdown or radio for language choice
-    language_choice = st.selectbox("Select Language:", ["English", "Arabic"], index=0)
+    language_choice = st.radio("Select Language:", ["English", "Arabic"])
 
     # Retrieve text from secrets
     eng_text = st.secrets["overview_english"]

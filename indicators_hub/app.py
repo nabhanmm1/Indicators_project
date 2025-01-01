@@ -1,4 +1,3 @@
-%%writefile indicators_hub/app.py
 import streamlit as st
 
 def main():

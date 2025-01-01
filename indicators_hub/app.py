@@ -1,8 +1,21 @@
 import streamlit as st
 
 def main():
-    st.title("Indicators Hub - Home Page")
-    st.write("Welcome to the main page!")
+    # App Title
+    st.title("Indicators Hub - Language Selection")
+
+    # Dropdown or radio for language choice
+    language_choice = st.selectbox("Select Language:", ["English", "Arabic"], index=0)
+
+    # Retrieve text from secrets
+    eng_text = st.secrets["overview_english"]
+    arb_text = st.secrets["overview_arabic"]
+
+    # Display the relevant text depending on the selected language
+    if language_choice == "English":
+        st.markdown(eng_text, unsafe_allow_html=True)
+    else:
+        st.markdown(arb_text, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()

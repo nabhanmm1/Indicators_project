@@ -1,21 +1,28 @@
 import streamlit as st
 
 def main():
-    # App Title
     st.title("Indicators Hub - Language Selection")
 
-    # Dropdown or radio for language choice
-    language_choice = st.radio("Select Language:", ["English", "Arabic"])
+    # Radio or selectbox for language
+    language_choice = st.radio("Select Language:", ["English", "Arabic"], index=0)
 
-    # Retrieve text from secrets
-    eng_text = st.secrets["overview_english"]
-    arb_text = st.secrets["overview_arabic"]
+    # Retrieve text from secrets (already stored in TOML format)
+    eng_text = st.secrets["overview_english"]  # normal LTR
+    arb_text = st.secrets["overview_arabic"]   # we want RTL
 
-    # Display the relevant text depending on the selected language
     if language_choice == "English":
+        # Render as-is (LTR)
         st.markdown(eng_text, unsafe_allow_html=True)
     else:
-        st.markdown(arb_text, unsafe_allow_html=True)
+        # Wrap Arabic text in a right-to-left div
+        st.markdown(
+            f"""
+            <div dir="rtl" style="text-align: right;">
+                {arb_text}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 if __name__ == "__main__":
     main()

@@ -118,10 +118,10 @@ def main():
     st.markdown(
         """
         This tool calculates the **required sample size** per group to detect a difference
-        between two population proportions \( p_1 \) and \( p_2 \) with specified:
+        between two population proportions $p_1$ and $p_2$ with specified:
         
-        - Significance level \( \alpha \) (Type I error)
-        - Desired Type II error \( \beta \) (or power = 1 - \( \beta \))
+        - Significance level $\alpha$ (Type I error)
+        - Desired Type II error $\beta$ (or power = 1 - $\beta$)
         - Whether the test is two-sided or one-sided
         
         Use the sidebar to select the calculation method and input the required parameters.
@@ -140,7 +140,7 @@ def main():
     
     # User Inputs with Tooltips
     alpha = st.sidebar.number_input(
-        "Alpha (α)", 
+        "Alpha (α Type I error)", 
         min_value=0.0, 
         max_value=1.0, 
         value=0.05, 
@@ -148,7 +148,7 @@ def main():
         help="Significance level (Type I error rate). Common values are 0.05 or 0.01."
     )
     beta  = st.sidebar.number_input(
-        "Beta (Type II error)", 
+        "Beta (β Type II error)", 
         min_value=0.0, 
         max_value=1.0, 
         value=0.2, 
@@ -208,10 +208,10 @@ def main():
         # Display Parameter Summary
         st.markdown(f"""
         - **Method Used**: {formula_used}
-        - \( \alpha \) = {alpha}
-        - \( \beta \) = {beta}
-        - \( p_1 \) = {p1}
-        - \( p_2 \) = {p2}
+        - $\alpha$ = {alpha}
+        - $\beta$ = {beta}
+        - $p_1$ = {p1}
+        - $p_2$ = {p2}
         - **Test Type** = {test_side}
         """)
         
@@ -227,8 +227,8 @@ def main():
                 n \geq 2 \times \frac{(z_{\alpha/2} + z_{\beta})^2 \times \bar{p} \times (1 - \bar{p})}{\delta^2}
                 $$
                 where:
-                - \( \bar{p} = \frac{p_1 + p_2}{2} \)
-                - \( \delta = |p_1 - p_2| \)
+                - $\bar{p} = \frac{p_1 + p_2}{2}$
+                - $\delta = |p_1 - p_2|$
                 """
             )
         else:
@@ -239,8 +239,8 @@ def main():
                 n = \frac{\left[z_{\alpha / 2} \times \sqrt{\frac{(p_1 + p_2)(q_1 + q_2)}{2}} + z_\beta \times \sqrt{p_1 q_1 + p_2 q_2}\right]^2}{(p_1 - p_2)^2}
                 $$
                 where:
-                - \( q_1 = 1 - p_1 \)
-                - \( q_2 = 1 - p_2 \)
+                - $q_1 = 1 - p_1$
+                - $q_2 = 1 - p_2$
                 """
             )
         
@@ -258,10 +258,10 @@ def main():
                     n \geq 2 \times \frac{{({z_alpha:.4f} + {z_beta:.4f})^2 \times {p_bar:.4f} \times (1 - {p_bar:.4f})}}{{({delta:.4f})^2}}
                     $$
                     where:
-                    - \( z_{{\alpha/2}} \) = {z_alpha:.4f}
-                    - \( z_{{\beta}} \) = {z_beta:.4f}
-                    - \( \bar{{p}} = \frac{{{p1} + {p2}}}{2} = {p_bar:.4f} \)
-                    - \( \delta \) = |{p1} - {p2}| = {delta:.4f}
+                    - $z_{{\alpha/2}}$ = {z_alpha:.4f}
+                    - $z_{{\beta}}$ = {z_beta:.4f}
+                    - $\bar{{p}} = \frac{{{p1} + {p2}}}{2} = {p_bar:.4f}$
+                    - $\delta$ = |{p1} - {p2}| = {delta:.4f}
                     """
                 )
             else:
@@ -277,11 +277,11 @@ def main():
                     n = \frac{{\left[{z_alpha:.4f} \times \sqrt{{\frac{{({p1} + {p2}) \times ({q1} + {q2})}}{2}}} + {z_beta:.4f} \times \sqrt{{{p1} \times {q1} + {p2} \times {q2}}}\right]^2}}{{({delta:.4f})^2}}
                     $$
                     where:
-                    - \( z_{{\alpha/2}} \) = {z_alpha:.4f}
-                    - \( z_{{\beta}} \) = {z_beta:.4f}
-                    - \( q_1 = 1 - p_1 = {q1:.4f} \)
-                    - \( q_2 = 1 - p_2 = {q2:.4f} \)
-                    - \( \delta = p_1 - p_2 = {delta:.4f} \)
+                    - $z_{{\alpha/2}}$ = {z_alpha:.4f}
+                    - $z_{{\beta}}$ = {z_beta:.4f}
+                    - $q_1 = 1 - p_1 = {q1:.4f} $
+                    - $q_2 = 1 - p_2 = {q2:.4f} $
+                    - $\delta = p_1 - p_2 = {delta:.4f} $
                     """
                 )
         

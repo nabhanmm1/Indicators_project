@@ -120,7 +120,7 @@ def main():
         This tool calculates the **required sample size** per group to detect a difference
         between two population proportions $p_1$ and $p_2$ with specified:
         
-        - Significance level $ \alpha $ (Type I error)
+        - Significance level $ \( \alpha \) $ (Type I error)
         - Desired Type II error $ \beta $ (or power = 1 - $ \beta $)
         - Whether the test is two-sided or one-sided
         

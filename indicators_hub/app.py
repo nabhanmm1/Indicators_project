@@ -1,7 +1,8 @@
 import streamlit as st
 
 def main():
-    st.title("Indicators Hub - Language Selection")
+    Title_project = st.secrets["overview_title"]
+    st.title(Title_project)
 
     language_choice = st.radio("Select Language:", ["English", "Arabic"], index=0)
 

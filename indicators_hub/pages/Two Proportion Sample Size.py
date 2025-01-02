@@ -207,7 +207,7 @@ def main():
         st.latex(r"n \geq " + str(n_required))
         
         # Display Parameter Summary
-        st.markdown(f"""
+        st.markdown(rf"""
         - **Method Used**: {formula_used}
         - $\alpha$ = {alpha}
         - $\beta$ = {beta}

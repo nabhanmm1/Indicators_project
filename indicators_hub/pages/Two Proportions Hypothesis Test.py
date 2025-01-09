@@ -219,7 +219,7 @@ def main():
                 **Formula Used (Finite Population):**
         
                 $$
-                z = \frac{{p_1 - p_2}}{{\sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}}
+                z = \frac{{p_1 - p_2}}{{\sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}}
                 $$
         
                 **Where:**
@@ -235,22 +235,22 @@ def main():
                 When sampling from finite populations, the standard error is adjusted using FPC:
         
                 $$
-                SE = \sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}
+                SE = \sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}
                 $$
         
                 **Calculation Steps:**
                 1. **Compute the Finite Population Correction (FPC) for each population:**
                    - For Population 1:
                      $$
-                     FPC_1 = \sqrt{\frac{{N_1 - n_1}}{{N_1 - 1}}}
+                     FPC_1 = \sqrt{{\frac{{N_1 - n_1}}{{N_1 - 1}}}}
                      $$
                    - For Population 2:
                      $$
-                     FPC_2 = \sqrt{\frac{{N_2 - n_2}}{{N_2 - 1}}}
+                     FPC_2 = \sqrt{{\frac{{N_2 - n_2}}{{N_2 - 1}}}}
                      $$
                 2. **Calculate the Standard Error (SE) with FPC:**
                    $$
-                   SE = \sqrt{\left(\frac{{p_1(1 - p_1)}}{{n_1}} \times FPC_1^2\right) + \left(\frac{{p_2(1 - p_2)}}{{n_2}} \times FPC_2^2\right)}
+                   SE = \sqrt{{\left(\frac{{p_1(1 - p_1)}}{{n_1}} \times FPC_1^2\right) + \left(\frac{{p_2(1 - p_2)}}{{n_2}} \times FPC_2^2\right)}}
                    $$
                 3. **Compute the z-test statistic:**
                    $$
@@ -266,7 +266,7 @@ def main():
                 **Formula Used (Infinite Population):**
         
                 $$
-                z = \frac{{p_1 - p_2}}{{\sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}}}
+                z = \frac{{p_1 - p_2}}{{\sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}}}}
                 $$
         
                 **Where:**
@@ -278,7 +278,7 @@ def main():
                 **Calculation Steps:**
                 1. **Calculate the Standard Error (SE):**
                    $$
-                   SE = \sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}
+                   SE = \sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}}
                    $$
                 2. **Compute the z-test statistic:**
                    $$

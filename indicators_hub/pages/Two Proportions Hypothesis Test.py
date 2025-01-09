@@ -215,9 +215,10 @@ def main():
     
     # Display Decision with RTL for Arabic
     st.markdown(f"### **Decision:** {decision_en}")
-    st.markdown(f"""### **القرار:** 
-    <div dir="rtl">{decision_ar}</div>
-    """, unsafe_allow_html=True)
+    st.markdown(
+        f"""### **القرار:** <div dir="rtl">{decision_ar}</div>""",
+        unsafe_allow_html=True
+    )
     
     # Expandable Section for Formula Details
     with st.expander("Show Formula Details"):

@@ -197,7 +197,7 @@ def main():
     st.markdown(f"- **Test Statistic (z):** {z:.4f}")
     st.markdown(f"- **P-Value:** {p_val:.4f}")
     
-    # Decision
+    # Decision with English and Arabic Translations
     if test_direction == 'greater':
         if p_val < alpha:
             decision_en = "Reject the null hypothesis. There is sufficient evidence that \( p_1 \) is greater than \( p_2 \)."
@@ -213,8 +213,11 @@ def main():
             decision_en = "Fail to reject the null hypothesis. There is insufficient evidence that \( p_1 \) is less than \( p_2 \)."
             decision_ar = "عدم رفض الفرضية الصفرية. لا توجد أدلة كافية على أن \( p_1 \) أقل من \( p_2 \)."
     
+    # Display Decision with RTL for Arabic
     st.markdown(f"### **Decision:** {decision_en}")
-    st.markdown(f"### **القرار:** {decision_ar}")
+    st.markdown(f"""### **القرار:** 
+    <div dir="rtl">{decision_ar}</div>
+    """, unsafe_allow_html=True)
     
     # Expandable Section for Formula Details
     with st.expander("Show Formula Details"):
@@ -293,7 +296,7 @@ def main():
                 4. **Compare the p-value with the significance level \( \alpha \) to make a decision.**
                 """
             )
-
+    
     # Expandable Section for Operating Characteristic (OC) Curve
     with st.expander("Show Operating Characteristic (OC) Curve"):
         st.markdown(

@@ -4,11 +4,21 @@ from scipy.stats import norm
 import numpy as np
 import matplotlib.pyplot as plt
 
-def calculate_test_statistic(p1, p2, n1, n2):
+def calculate_test_statistic(p1, p2, n1, n2, finite=False, N1=None, N2=None):
     """
     Calculates the z-test statistic for the difference in proportions.
+    If finite=True, applies Finite Population Correction (FPC).
     """
-    se = math.sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2)
+    if finite and N1 and N2:
+        # Calculate FPC for each population
+        FPC1 = math.sqrt((N1 - n1) / (N1 - 1)) if N1 > 1 else 1
+        FPC2 = math.sqrt((N2 - n2) / (N2 - 1)) if N2 > 1 else 1
+        # Calculate standard error with FPC
+        se = math.sqrt((p1 * (1 - p1) / n1) * FPC1**2 + (p2 * (1 - p2) / n2) * FPC2**2)
+    else:
+        # Standard standard error without FPC
+        se = math.sqrt(p1*(1 - p1)/n1 + p2*(1 - p2)/n2)
+    
     if se == 0:
         return 0
     z = (p1 - p2) / se
@@ -171,7 +181,12 @@ def main():
             st.sidebar.warning("Population size N₂ must be at least equal to sample size n₂.")
     
     # Calculate Test Statistic and P-Value
-    z = calculate_test_statistic(p1, p2, n1, n2)
+    if finite_population == "Yes" and N1 and N2:
+        finite = True
+    else:
+        finite = False
+    
+    z = calculate_test_statistic(p1, p2, n1, n2, finite, N1, N2)
     p_val = calculate_p_value(z, direction=test_direction)
     
     # Display Results
@@ -198,36 +213,83 @@ def main():
     
     # Expandable Section for Formula Details
     with st.expander("Show Formula Details"):
-        st.markdown(
-            r"""
-            **Formula Used:**
+        if finite_population == "Yes" and N1 and N2:
+            st.markdown(
+                rf"""
+                **Formula Used (Finite Population):**
+        
+                $$
+                z = \frac{{p_1 - p_2}}{{\sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}
+                $$
+        
+                **Where:**
+                - $ p_1 $ = Proportion in the first population
+                - $ p_2 $ = Proportion in the second population
+                - $ n_1 $ = Sample size of the first population
+                - $ n_2 $ = Sample size of the second population
+                - $ N_1 $ = Population size of the first group
+                - $ N_2 $ = Population size of the second group
+        
+                **Adjustment with Finite Population Correction (FPC):**
+        
+                When sampling from finite populations, the standard error is adjusted using FPC:
+        
+                $$
+                SE = \sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}
+                $$
+        
+                **Calculation Steps:**
+                1. **Compute the Finite Population Correction (FPC) for each population:**
+                   - For Population 1:
+                     $$
+                     FPC_1 = \sqrt{\frac{{N_1 - n_1}}{{N_1 - 1}}}
+                     $$
+                   - For Population 2:
+                     $$
+                     FPC_2 = \sqrt{\frac{{N_2 - n_2}}{{N_2 - 1}}}
+                     $$
+                2. **Calculate the Standard Error (SE) with FPC:**
+                   $$
+                   SE = \sqrt{\left(\frac{{p_1(1 - p_1)}}{{n_1}} \times FPC_1^2\right) + \left(\frac{{p_2(1 - p_2)}}{{n_2}} \times FPC_2^2\right)}
+                   $$
+                3. **Compute the z-test statistic:**
+                   $$
+                   z = \frac{{p_1 - p_2}}{{SE}}
+                   $$
+                4. **Determine the p-value based on the test direction.**
+                5. **Compare the p-value with the significance level \( \alpha \) to make a decision.**
+                """
+            )
+        else:
+            st.markdown(
+                rf"""
+                **Formula Used (Infinite Population):**
+        
+                $$
+                z = \frac{{p_1 - p_2}}{{\sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}}}
+                $$
+        
+                **Where:**
+                - $ p_1 $ = Proportion in the first population
+                - $ p_2 $ = Proportion in the second population
+                - $ n_1 $ = Sample size of the first population
+                - $ n_2 $ = Sample size of the second population
+        
+                **Calculation Steps:**
+                1. **Calculate the Standard Error (SE):**
+                   $$
+                   SE = \sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}
+                   $$
+                2. **Compute the z-test statistic:**
+                   $$
+                   z = \frac{{p_1 - p_2}}{{SE}}
+                   $$
+                3. **Determine the p-value based on the test direction.**
+                4. **Compare the p-value with the significance level \( \alpha \) to make a decision.**
+                """
+            )
     
-            $$
-            z = \frac{p_1 - p_2}{\sqrt{\frac{p_1(1 - p_1)}{n_1} + \frac{p_2(1 - p_2)}{n_2}}}
-            $$
-    
-            **Where:**
-            - $ p_1 $ = Proportion in the first population
-            - $ p_2 $ = Proportion in the second population
-            - $ n_1 $ = Sample size of the first population
-            - $ n_2 $ = Sample size of the second population
-            - $ \alpha $ = Significance level
-    
-            **Steps:**
-            1. Calculate the standard error (SE):
-               $$
-               SE = \sqrt{\frac{p_1(1 - p_1)}{n_1} + \frac{p_2(1 - p_2)}{n_2}}
-               $$
-            2. Compute the z-test statistic:
-               $$
-               z = \frac{p_1 - p_2}{SE}
-               $$
-            3. Determine the p-value based on the test direction.
-            4. Compare the p-value with the significance level \( \alpha \) to make a decision.
-            """
-        )
-    
-    # Operating Characteristic (OC) Curve Visualization
+    # Expandable Section for Operating Characteristic (OC) Curve
     with st.expander("Show Operating Characteristic (OC) Curve"):
         st.markdown(
             r"""
@@ -253,7 +315,7 @@ def main():
     st.markdown(
         r"""
         ---
-        **Note:** If you specified finite population sizes, the calculations adjust the sample size accordingly using the Finite Population Correction (FPC). Ensure that your sample sizes do not exceed your population sizes.
+        **Note:** If you specified finite population sizes, the calculations adjust the sample sizes accordingly using the Finite Population Correction (FPC). Ensure that your sample sizes do not exceed your population sizes.
         """
     )
 

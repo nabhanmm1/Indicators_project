@@ -219,7 +219,7 @@ def main():
                 **Formula Used (Finite Population):**
         
                 $$
-                z = \frac{{p_1 - p_2}}{{\sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}}
+                z = \frac{{p_1 - p_2}}{{\sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}}}
                 $$
         
                 **Where:**

@@ -200,26 +200,31 @@ def main():
     # Decision
     if test_direction == 'greater':
         if p_val < alpha:
-            decision = "Reject the null hypothesis. There is sufficient evidence that \( p_1 \) is greater than \( p_2 \)."
+            decision_en = "Reject the null hypothesis. There is sufficient evidence that \( p_1 \) is greater than \( p_2 \)."
+            decision_ar = "رفض الفرضية الصفرية. هناك أدلة كافية على أن \( p_1 \) أكبر من \( p_2 \)."
         else:
-            decision = "Fail to reject the null hypothesis. There is insufficient evidence that \( p_1 \) is greater than \( p_2 \)."
+            decision_en = "Fail to reject the null hypothesis. There is insufficient evidence that \( p_1 \) is greater than \( p_2 \)."
+            decision_ar = "عدم رفض الفرضية الصفرية. لا توجد أدلة كافية على أن \( p_1 \) أكبر من \( p_2 \)."
     else:
         if p_val < alpha:
-            decision = "Reject the null hypothesis. There is sufficient evidence that \( p_1 \) is less than \( p_2 \)."
+            decision_en = "Reject the null hypothesis. There is sufficient evidence that \( p_1 \) is less than \( p_2 \)."
+            decision_ar = "رفض الفرضية الصفرية. هناك أدلة كافية على أن \( p_1 \) أقل من \( p_2 \)."
         else:
-            decision = "Fail to reject the null hypothesis. There is insufficient evidence that \( p_1 \) is less than \( p_2 \)."
+            decision_en = "Fail to reject the null hypothesis. There is insufficient evidence that \( p_1 \) is less than \( p_2 \)."
+            decision_ar = "عدم رفض الفرضية الصفرية. لا توجد أدلة كافية على أن \( p_1 \) أقل من \( p_2 \)."
     
-    st.markdown(f"### **Decision:** {decision}")
+    st.markdown(f"### **Decision:** {decision_en}")
+    st.markdown(f"### **القرار:** {decision_ar}")
     
     # Expandable Section for Formula Details
     with st.expander("Show Formula Details"):
         if finite_population == "Yes" and N1 and N2:
             st.markdown(
-                rf"""
+                r"""
                 **Formula Used (Finite Population):**
         
                 $$
-                z = \frac{{p_1 - p_2}}{{\sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}}}
+                z = \frac{p_1 - p_2}{\sqrt{\frac{p_1(1 - p_1)}{n_1} \times \frac{N_1 - n_1}{N_1 - 1} + \frac{p_2(1 - p_2)}{n_2} \times \frac{N_2 - n_2}{N_2 - 1}}}
                 $$
         
                 **Where:**
@@ -235,26 +240,26 @@ def main():
                 When sampling from finite populations, the standard error is adjusted using FPC:
         
                 $$
-                SE = \sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}
+                SE = \sqrt{\frac{p_1(1 - p_1)}{n_1} \times \frac{N_1 - n_1}{N_1 - 1} + \frac{p_2(1 - p_2)}{n_2} \times \frac{N_2 - n_2}{N_2 - 1}}
                 $$
         
                 **Calculation Steps:**
                 1. **Compute the Finite Population Correction (FPC) for each population:**
                    - For Population 1:
                      $$
-                     FPC_1 = \sqrt{{\frac{{N_1 - n_1}}{{N_1 - 1}}}}
+                     FPC_1 = \sqrt{\frac{N_1 - n_1}{N_1 - 1}}
                      $$
                    - For Population 2:
                      $$
-                     FPC_2 = \sqrt{{\frac{{N_2 - n_2}}{{N_2 - 1}}}}
+                     FPC_2 = \sqrt{\frac{N_2 - n_2}{N_2 - 1}}
                      $$
                 2. **Calculate the Standard Error (SE) with FPC:**
                    $$
-                   SE = \sqrt{{\left(\frac{{p_1(1 - p_1)}}{{n_1}} \times FPC_1^2\right) + \left(\frac{{p_2(1 - p_2)}}{{n_2}} \times FPC_2^2\right)}}
+                   SE = \sqrt{\left(\frac{p_1(1 - p_1)}{n_1} \times FPC_1^2\right) + \left(\frac{p_2(1 - p_2)}{n_2} \times FPC_2^2\right)}
                    $$
                 3. **Compute the z-test statistic:**
                    $$
-                   z = \frac{{p_1 - p_2}}{{SE}}
+                   z = \frac{p_1 - p_2}{SE}
                    $$
                 4. **Determine the p-value based on the test direction.**
                 5. **Compare the p-value with the significance level \( \alpha \) to make a decision.**
@@ -262,11 +267,11 @@ def main():
             )
         else:
             st.markdown(
-                rf"""
+                r"""
                 **Formula Used (Infinite Population):**
         
                 $$
-                z = \frac{{p_1 - p_2}}{{\sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}}}}
+                z = \frac{p_1 - p_2}{\sqrt{\frac{p_1(1 - p_1)}{n_1} + \frac{p_2(1 - p_2)}{n_2}}}
                 $$
         
                 **Where:**
@@ -278,17 +283,17 @@ def main():
                 **Calculation Steps:**
                 1. **Calculate the Standard Error (SE):**
                    $$
-                   SE = \sqrt{{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}}
+                   SE = \sqrt{\frac{p_1(1 - p_1)}{n_1} + \frac{p_2(1 - p_2)}{n_2}}
                    $$
                 2. **Compute the z-test statistic:**
                    $$
-                   z = \frac{{p_1 - p_2}}{{SE}}
+                   z = \frac{p_1 - p_2}{SE}
                    $$
                 3. **Determine the p-value based on the test direction.**
                 4. **Compare the p-value with the significance level \( \alpha \) to make a decision.**
                 """
             )
-    
+
     # Expandable Section for Operating Characteristic (OC) Curve
     with st.expander("Show Operating Characteristic (OC) Curve"):
         st.markdown(
@@ -296,6 +301,27 @@ def main():
             ### Operating Characteristic (OC) Curve
             
             The OC curve illustrates the power of the test across a range of true proportions \( p_2 \). It shows the probability of correctly rejecting the null hypothesis for different values of \( p_2 \).
+            
+            **Interpretation:**
+            - **Power:** The ability of the test to correctly reject the null hypothesis when it is false.
+            - **Higher Power:** Indicates a higher probability of detecting a true effect.
+            - **Curve Shape:** As \( p_2 \) decreases (for 'greater' test), power increases, and vice versa.
+            
+            ---
+            """
+        )
+        st.markdown(
+            r"""
+            ### منحنى الخصائص التشغيلية (OC)
+            
+            يوضح منحنى OC قوة الاختبار عبر مجموعة من النسب الحقيقية \( p_2 \). يظهر احتمال رفض الفرضية الصفرية بشكل صحيح لمختلف قيم \( p_2 \).
+            
+            **التفسير:**
+            - **القوة:** قدرة الاختبار على رفض الفرضية الصفرية بشكل صحيح عندما تكون خاطئة.
+            - **قوة أعلى:** تشير إلى احتمال أكبر لاكتشاف تأثير حقيقي.
+            - **شكل المنحنى:** كلما انخفض \( p_2 \) (في اختبار 'أكبر'), زادت القوة، والعكس صحيح.
+            
+            ---
             """
         )
         

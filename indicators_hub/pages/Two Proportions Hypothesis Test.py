@@ -80,9 +80,9 @@ def main():
     st.markdown(
         r"""
         ### Perform a One-Sided Difference in Proportion Test
-    
+
         This app allows you to test whether one population proportion is greater than or less than another. Additionally, it visualizes the **Operating Characteristic (OC) curve**, illustrating the test's power across a range of true proportions.
-    
+
         ---
         """,
         unsafe_allow_html=True
@@ -192,7 +192,7 @@ def main():
     # Display Results
     st.subheader("Test Results")
     st.latex(r"""
-    z = \frac{{p_1 - p_2}}{{\sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} + \frac{{p_2(1 - p_2)}}{{n_2}}}}}
+    z = \frac{p_1 - p_2}{\sqrt{\frac{p_1(1 - p_1)}{n_1} + \frac{p_2(1 - p_2)}{n_2}}}
     """)
     st.markdown(f"- **Test Statistic (z):** {z:.4f}")
     st.markdown(f"- **P-Value:** {p_val:.4f}")
@@ -218,7 +218,9 @@ def main():
                 rf"""
                 **Formula Used (Finite Population):**
         
-                $$ z = \frac{{p_1 - p_2}}{{\sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}} $$
+                $$
+                z = \frac{{p_1 - p_2}}{{\sqrt{\frac{{p_1(1 - p_1)}}{{n_1}} \times \frac{{N_1 - n_1}}{{N_1 - 1}} + \frac{{p_2(1 - p_2)}}{{n_2}} \times \frac{{N_2 - n_2}}{{N_2 - 1}}}}
+                $$
         
                 **Where:**
                 - $ p_1 $ = Proportion in the first population

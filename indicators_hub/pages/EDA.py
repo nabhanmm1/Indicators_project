@@ -18,7 +18,7 @@ st.markdown("## تحليل استكشافي لبيانات رضا العملاء
 # Load Data with Error Handling
 @st.cache_data
 def load_data():
-    file_path = 'data/customer_satisfaction.csv'
+    file_path = 'indicators_hub/data/customer_satisfaction.csv'
     if not os.path.exists(file_path):
         st.error(f"Data file not found at path: {file_path}. Please ensure the file exists in the 'data/' directory.")
         return None

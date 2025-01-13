@@ -1,4 +1,3 @@
-
 # pages/2_DOE_Analysis.py
 
 import streamlit as st
@@ -19,7 +18,7 @@ st.markdown("## تحليل التصميم التجريبي/الانحدار: ا�
 # Load Data with Error Handling
 @st.cache_data
 def load_data():
-    file_path = 'indicators_hub/data/customer_satisfaction.csv'
+    file_path = 'data/customer_satisfaction.csv'
     if not os.path.exists(file_path):
         st.error(f"Data file not found at path: {file_path}. Please ensure the file exists in the 'data/' directory.")
         st.error(f"لم يتم العثور على ملف البيانات في المسار: {file_path}. يرجى التأكد من وجود الملف في مجلد 'data/'.")
@@ -47,8 +46,7 @@ st.sidebar.header("🔧 Selection Panel / لوحة الاختيار")
 st.sidebar.subheader("1. Select Factors / اختر العوامل:")
 available_factors = df.columns.tolist()
 
-# Remove columns that shouldn't be used as factors (if any)
-# For example, 'satisfaction' is the response variable, not a factor
+# Remove response variable
 response_variable = 'satisfaction'
 if response_variable in available_factors:
     available_factors.remove(response_variable)
@@ -75,7 +73,23 @@ else:
     )
 
 # **C. Model Execution Button**
+st.sidebar.subheader("3. Run Analysis / تشغيل التحليل")
 run_analysis = st.sidebar.button("🔍 Run DOE Analysis / تشغيل تحليل التصميم التجريبي")
+
+# Helper Functions
+def escape_variable(var_name):
+    """
+    Enclose variable names with backticks to handle spaces and special characters.
+    """
+    return f"`{var_name}`"
+
+def escape_interaction(interaction):
+    """
+    Enclose each variable in an interaction term with backticks.
+    """
+    vars_in_interaction = interaction.split('*')
+    escaped = '*'.join([escape_variable(var) for var in vars_in_interaction])
+    return escaped
 
 # Main Content Area
 if run_analysis:
@@ -84,12 +98,14 @@ if run_analysis:
         st.error("لم يتم اختيار أي عوامل. يرجى اختيار عامل واحد على الأقل للتحليل.")
     else:
         # **1. Prepare the Formula for Regression**
-        # Include main effects
-        formula = 'satisfaction ~ ' + ' + '.join(selected_factors)
+        # Escape variable names
+        escaped_factors = [escape_variable(var) for var in selected_factors]
+        formula = 'satisfaction ~ ' + ' + '.join(escaped_factors)
         
-        # Include selected interactions
+        # Escape interaction terms
         if selected_interactions:
-            formula += ' + ' + ' + '.join(selected_interactions)
+            escaped_interactions = [escape_interaction(interaction) for interaction in selected_interactions]
+            formula += ' + ' + ' + '.join(escaped_interactions)
         
         st.markdown("### **Regression Formula / صيغة الانحدار:**")
         st.code(formula, language='python')
@@ -105,7 +121,7 @@ if run_analysis:
         # **3. Display Model Summary**
         st.markdown("### **Model Summary / ملخص النموذج:**")
         st.text(model.summary())
-
+    
         # **4. ANOVA Table**
         st.markdown("### **ANOVA Table / جدول تحليل التباين:**")
         try:
@@ -114,13 +130,13 @@ if run_analysis:
         except Exception as e:
             st.error(f"Error generating ANOVA table: {e}")
             st.error(f"خطأ في إنشاء جدول تحليل التباين: {e}")
-
+    
         # **5. Interpretation of Results**
         st.markdown("### **Interpretation / تفسير النتائج:**")
         st.markdown("""
-        - **Significant Factors:** Factors with p-values < 0.05 are considered statistically significant.
-        - **Interaction Effects:** Significant interaction terms indicate that the effect of one factor depends on the level of another factor.
-        - **Model Fit:** R-squared indicates the proportion of variance explained by the model.
+        - **Significant Factors / العوامل ذات الدلالة الإحصائية:** Factors with p-values < 0.05 are considered statistically significant.
+        - **Interaction Effects / تأثيرات التفاعل:** Significant interaction terms indicate that the effect of one factor depends on the level of another factor.
+        - **Model Fit / ملاءمة النموذج:** R-squared indicates the proportion of variance explained by the model.
         
         ---
         
@@ -146,17 +162,21 @@ if run_analysis:
                 if '*' in factor:
                     # Interaction term
                     factors = factor.split('*')
-                    st.write(f"**Interaction: {factors[0]} × {factors[1]}**")
+                    st.write(f"**Interaction: {factors[0].strip('`')} × {factors[1].strip('`')} / تفاعل: {factors[0].strip('`')} × {factors[1].strip('`')}**")
                     fig, ax = plt.subplots()
                     sns.boxplot(x=factors[0], y='satisfaction', hue=factors[1], data=df)
-                    ax.set_title(f"Interaction Effect: {factors[0]} × {factors[1]}")
+                    ax.set_title(f"Interaction Effect: {factors[0].strip('`')} × {factors[1].strip('`')}")
+                    ax.set_xlabel(f" {factors[0].strip('`')} / {factors[0].strip('`')}")
+                    ax.set_ylabel("Satisfaction Score / درجة الرضا")
                     st.pyplot(fig)
                 else:
                     # Main effect
-                    st.write(f"**Factor: {factor}**")
+                    st.write(f"**Factor: {factor.strip('`')} / العامل: {factor.strip('`')}**")
                     fig, ax = plt.subplots()
                     sns.boxplot(x=factor, y='satisfaction', data=df)
-                    ax.set_title(f"Effect of {factor} on Satisfaction")
+                    ax.set_title(f"Effect of {factor.strip('`')} on Satisfaction / تأثير {factor.strip('`')} على الرضا")
+                    ax.set_xlabel(f"{factor.strip('`')} / {factor.strip('`')}")
+                    ax.set_ylabel("Satisfaction Score / درجة الرضا")
                     st.pyplot(fig)
         else:
             st.write("No significant factors found based on the selected model.")

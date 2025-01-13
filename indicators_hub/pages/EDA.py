@@ -278,33 +278,25 @@ average_satisfaction = filtered_df['satisfaction'].mean()
 median_satisfaction = filtered_df['satisfaction'].median()
 std_satisfaction = filtered_df['satisfaction'].std()
 
-st.markdown("""
+st.markdown(f"""
 ### **A. Overall Satisfaction / الرضا العام**
-- **Average Satisfaction / متوسط الرضا:** {:.2f}
-- **Median Satisfaction / الوسيط:** {:.2f}
-- **Standard Deviation / الانحراف المعياري:** {:.2f}
+- **Average Satisfaction / متوسط الرضا:** {average_satisfaction:.2f}
+- **Median Satisfaction / الوسيط:** {median_satisfaction:.2f}
+- **Standard Deviation / الانحراف المعياري:** {std_satisfaction:.2f}
 - **Observation / ملاحظة:** Satisfaction scores are widely spread, indicating varied customer experiences.
 - **ملاحظة:** درجات الرضا منتشرة على نطاق واسع، مما يشير إلى تجارب عملاء متنوعة.
-""".format(
-    average_satisfaction,
-    median_satisfaction,
-    std_satisfaction
-))
+""")
 
 # B. Customer Type Influence
 dominant_type = filtered_df['Customer type'].mode()[0]
 dominant_type_percentage = (filtered_df['Customer type'].value_counts(normalize=True) * 100).max()
 
-st.markdown("""
+st.markdown(f"""
 ### **B. Customer Type Influence / تأثير نوع العميل**
-- **Dominant Type / النوع السائد:** `{}` customers constitute {:.2f}%.
-- **Insight / رؤية:** Focus on maintaining high satisfaction levels among `{}` can significantly impact overall metrics.
-- **رؤية:** التركيز على الحفاظ على مستويات عالية من الرضا بين `{}` يمكن أن يؤثر بشكل كبير على المقاييس العامة.
-""".format(
-    dominant_type,
-    dominant_type_percentage,
-    dominant_type
-))
+- **Dominant Type / النوع السائد:** `{dominant_type}` customers constitute {dominant_type_percentage:.2f}%.
+- **Insight / رؤية:** Focus on maintaining high satisfaction levels among `{dominant_type}` can significantly impact overall metrics.
+- **رؤية:** التركيز على الحفاظ على مستويات عالية من الرضا بين `{dominant_type}` يمكن أن يؤثر بشكل كبير على المقاييس العامة.
+""")
 
 # C. Gender Differences
 male_count = filtered_df['Gender'].value_counts().get('m', 0)
@@ -312,33 +304,24 @@ male_percentage = (filtered_df['Gender'].value_counts(normalize=True) * 100).get
 female_count = filtered_df['Gender'].value_counts().get('f', 0)
 female_percentage = (filtered_df['Gender'].value_counts(normalize=True) * 100).get('f', 0)
 
-st.markdown("""
+st.markdown(f"""
 ### **C. Gender Differences / اختلافات الجنس**
-- **Male / ذكر:** {} ({:.2f}%).
-- **Female / أنثى:** {} ({:.2f}%).
+- **Male / ذكر:** {male_count} ({male_percentage:.2f}%%).
+- **Female / أنثى:** {female_count} ({female_percentage:.2f}%%).
 - **Insight / رؤية:** Analyze if gender influences satisfaction and tailor services accordingly.
 - **رؤية:** تحليل ما إذا كان الجنس يؤثر على الرضا وتخصيص الخدمات بناءً على ذلك.
-""".format(
-    male_count,
-    male_percentage,
-    female_count,
-    female_percentage
-))
+""")
 
 # D. Age Group Trends
 majority_age_group = filtered_df['Age'].mode()[0]
 majority_age_percentage = (filtered_df['Age'].value_counts(normalize=True) * 100).max()
 
-st.markdown("""
+st.markdown(f"""
 ### **D. Age Group Trends / اتجاهات فئات العمر**
-- **Majority Age Group / فئة العمر الغالبة:** `{}` at {:.2f}%.
-- **Insight / رؤية:** Understanding the preferences of the `{}` demographic can enhance satisfaction.
-- **رؤية:** فهم تفضيلات الفئة العمرية `{}` يمكن أن يعزز الرضا.
-""".format(
-    majority_age_group,
-    majority_age_percentage,
-    majority_age_group
-))
+- **Majority Age Group / فئة العمر الغالبة:** `{majority_age_group}` at {majority_age_percentage:.2f}%.
+- **Insight / رؤية:** Understanding the preferences of the `{majority_age_group}` demographic can enhance satisfaction.
+- **رؤية:** فهم تفضيلات الفئة العمرية `{majority_age_group}` يمكن أن يعزز الرضا.
+""")
 
 # E. City-Based Satisfaction
 primary_city = filtered_df['City'].value_counts().idxmax()
@@ -346,77 +329,59 @@ primary_city_percentage = (filtered_df['City'].value_counts(normalize=True) * 10
 second_city = filtered_df['City'].value_counts().nlargest(2).index[1]
 second_city_percentage = (filtered_df['City'].value_counts(normalize=True) * 100).nlargest(2).iloc[1]
 
-st.markdown("""
+st.markdown(f"""
 ### **E. City-Based Satisfaction / الرضا حسب المدينة**
-- **Primary Cities / المدن الرئيسية:** `{}` (~{:.2f}%) and `{}` (~{:.2f}%).
+- **Primary Cities / المدن الرئيسية:** `{primary_city}` (~{primary_city_percentage:.2f}%%) and `{second_city}` (~{second_city_percentage:.2f}%%).
 - **Observation / ملاحظة:** Regional service quality might vary; identify city-specific strengths and weaknesses.
 - **ملاحظة:** قد تختلف جودة الخدمة الإقليمية؛ تحديد نقاط القوة والضعف الخاصة بكل مدينة.
-""".format(
-    primary_city,
-    primary_city_percentage,
-    second_city,
-    second_city_percentage
-))
+""")
 
 # F. Nationality Impact
 top_nationality = top_nationalities[0]
 top_nationality_percentage = (filtered_df['nationality'].value_counts(normalize=True) * 100).iloc[0]
 
-st.markdown("""
+st.markdown(f"""
 ### **F. Nationality Impact / تأثير الجنسية**
-- **Top Nationality / أعلى جنسية:** `{}` at {:.2f}%.
+- **Top Nationality / أعلى جنسية:** `{top_nationality}` at {top_nationality_percentage:.2f}%%.
 - **Insight / رؤية:** Catering to the needs of the largest nationality can improve satisfaction significantly.
 - **رؤية:** تلبية احتياجات أكبر جنسية يمكن أن يحسن الرضا بشكل كبير.
-""".format(
-    top_nationality,
-    top_nationality_percentage
-))
+""")
 
 # G. Multiple Visits and Satisfaction
 multiple_visits_yes = filtered_df['multiple visits'].value_counts().get('Yes', 0)
 multiple_visits_yes_percentage = (filtered_df['multiple visits'].value_counts(normalize=True) * 100).get('Yes', 0)
 
-st.markdown("""
+st.markdown(f"""
 ### **G. Multiple Visits and Satisfaction / الزيارات المتعددة والرضا**
-- **Multiple Visits / الزيارات المتعددة:** {} ({:.2f}%).
+- **Multiple Visits / الزيارات المتعددة:** {multiple_visits_yes} ({multiple_visits_yes_percentage:.2f}%%).
 - **Insight / رؤية:** Encourage repeat business through loyalty programs to boost satisfaction and retention.
 - **رؤية:** تشجيع الأعمال المتكررة من خلال برامج الولاء لتعزيز الرضا والاحتفاظ بالعملاء.
-""".format(
-    multiple_visits_yes,
-    multiple_visits_yes_percentage
-))
+""")
 
 # H. Duration of Stay Correlation
 duration_corr = filtered_df['duration of stay'].corr(filtered_df['satisfaction'])
 
-st.markdown("""
+st.markdown(f"""
 ### **H. Duration of Stay Correlation / ارتباط مدة الإقامة**
-- **Pearson Correlation / معامل ارتباط بيرسون:** {:.2f}.
+- **Pearson Correlation / معامل ارتباط بيرسون:** {duration_corr:.2f}.
 - **Insight / رؤية:** Assess if longer stays correlate with higher satisfaction or indicate potential issues.
 - **رؤية:** تقييم ما إذا كانت الإقامات الأطول ترتبط بزيادة الرضا أو تشير إلى مشكلات محتملة.
-""".format(
-    duration_corr
-))
+""")
 
 # I. Outliers and Anomalies
 min_satisfaction_score = filtered_df['satisfaction'].min()
 max_satisfaction_score = filtered_df['satisfaction'].max()
 
-st.markdown("""
+st.markdown(f"""
 ### **I. Outliers and Anomalies / الشواذ والأنماط غير الطبيعية**
-- **Extremes / الحدود القصوى:** Scores as low as {:.2f} and as high as {:.2f} indicate exceptional experiences or critical failures.
+- **Extremes / الحدود القصوى:** Scores as low as {min_satisfaction_score:.2f} and as high as {max_satisfaction_score:.2f} indicate exceptional experiences or critical failures.
 - **Action / إجراء:** Investigate outliers for actionable feedback.
-- **رؤية:** درجات تصل إلى {:.2f} وتنخفض إلى {:.2f} تشير إلى تجارب استثنائية أو فشل حرج. 
+- **رؤية:** درجات تصل إلى {min_satisfaction_score:.2f} وتنخفض إلى {max_satisfaction_score:.2f} تشير إلى تجارب استثنائية أو فشل حرج.
 - **إجراء:** التحقيق في القيم الشاذة للحصول على ملاحظات قابلة للتنفيذ.
-""".format(
-    min_satisfaction_score,
-    max_satisfaction_score,
-    min_satisfaction_score,
-    max_satisfaction_score
-))
+""")
 
 # J. Regional Nationalities
-st.markdown("""
+st.markdown(f"""
 ### **J. Regional Nationalities / الجنسيات الإقليمية**
 - **Service Tailoring / تخصيص الخدمة:** High satisfaction among specific nationalities suggests effective service strategies that can be replicated or adjusted for others.
 - **رؤية:** الرضا العالي بين جنسيات محددة يشير إلى استراتيجيات خدمة فعالة يمكن تكرارها أو تعديلها للآخرين.

@@ -1,4 +1,8 @@
 streamlit
 scipy
+pandas
 numpy
 matplotlib
+seaborn
+plotly
+openpyxl

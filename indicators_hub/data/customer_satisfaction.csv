@@ -1,4 +1,4 @@
-ID,Customer_type,Gender,Age,City,multiple_visits,duration_of_stay,nationality,satisfaction
+ID,Customer type,Gender,Age,City,multiple visits,duration of stay,nationality,satisfaction
 43345,b2b,m,middle_age,medinah,No,12,الأردن,83.88527276
 43325,b2b,m,middle_age,makkah,Yes,10,طاجكستان,2.746015004
 43351,b2c,f,middle_age,makkah,No,4,بنغلاديش,28.2734445

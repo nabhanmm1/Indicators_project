@@ -16,7 +16,7 @@ st.title("🔍 Exploratory Data Analysis: Customer Satisfaction")
 # Load Data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('data/customer_satisfaction.csv', encoding='utf-8')
+    df = pd.read_csv('indicators_hub/data/customer_satisfaction.csv', encoding='utf-8')
     return df
 
 df = load_data()

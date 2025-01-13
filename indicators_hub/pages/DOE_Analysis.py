@@ -7,6 +7,8 @@ import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from itertools import combinations
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Set the page configuration
 st.set_page_config(page_title="DOE/Regression Analysis", layout="wide")
@@ -38,6 +40,11 @@ df = load_data()
 
 if df is None:
     st.stop()
+
+# Display Available Columns for Debugging
+st.sidebar.header("🔍 Data Inspection / فحص البيانات")
+if st.sidebar.checkbox("📋 Show Available Columns / عرض الأعمدة المتاحة"):
+    st.sidebar.write(df.columns.tolist())
 
 # Sidebar for Factor and Interaction Selection
 st.sidebar.header("🔧 Selection Panel / لوحة الاختيار")
@@ -83,13 +90,31 @@ def escape_variable(var_name):
     """
     return f"`{var_name}`"
 
-def escape_interaction(interaction):
+def is_categorical(df, var):
     """
-    Enclose each variable in an interaction term with backticks.
+    Determine if a variable is categorical based on its data type.
     """
-    vars_in_interaction = interaction.split('*')
-    escaped = '*'.join([escape_variable(var) for var in vars_in_interaction])
-    return escaped
+    return df[var].dtype == 'object' or df[var].dtype.name == 'category'
+
+def process_factor(var, is_cat):
+    """
+    Apply C() to categorical variables and escape variable names.
+    """
+    if is_cat:
+        return f"C({escape_variable(var)})"
+    else:
+        return f"{escape_variable(var)}"
+
+def process_interaction(interaction, df):
+    """
+    Process interaction terms by applying C() to categorical variables.
+    """
+    var1, var2 = interaction.split('*')
+    is_cat1 = is_categorical(df, var1)
+    is_cat2 = is_categorical(df, var2)
+    term1 = process_factor(var1, is_cat1)
+    term2 = process_factor(var2, is_cat2)
+    return f"{term1}*{term2}"
 
 # Main Content Area
 if run_analysis:
@@ -98,17 +123,21 @@ if run_analysis:
         st.error("لم يتم اختيار أي عوامل. يرجى اختيار عامل واحد على الأقل للتحليل.")
     else:
         # **1. Prepare the Formula for Regression**
-        # Escape variable names
-        escaped_factors = [escape_variable(var) for var in selected_factors]
+        # Escape and process main factors
+        escaped_factors = [process_factor(var, is_categorical(df, var)) for var in selected_factors]
         formula = 'satisfaction ~ ' + ' + '.join(escaped_factors)
         
-        # Escape interaction terms
+        # Escape and process interaction terms
         if selected_interactions:
-            escaped_interactions = [escape_interaction(interaction) for interaction in selected_interactions]
+            escaped_interactions = [process_interaction(interaction, df) for interaction in selected_interactions]
             formula += ' + ' + ' + '.join(escaped_interactions)
         
         st.markdown("### **Regression Formula / صيغة الانحدار:**")
         st.code(formula, language='python')
+        
+        # **Debugging Aid: Display the Formula**
+        st.markdown("**🔎 Constructed Formula / الصيغة المُركبة:**")
+        st.write(formula)
         
         # **2. Fit the Regression Model**
         try:
@@ -162,20 +191,23 @@ if run_analysis:
                 if '*' in factor:
                     # Interaction term
                     factors = factor.split('*')
-                    st.write(f"**Interaction: {factors[0].strip('`')} × {factors[1].strip('`')} / تفاعل: {factors[0].strip('`')} × {factors[1].strip('`')}**")
+                    var1 = factors[0].strip()
+                    var2 = factors[1].strip()
+                    st.write(f"**Interaction: {var1.strip('C(`')} × {var2.strip('C(`')}/ تفاعل: {var1.strip('C(`')} × {var2.strip('C(`')}**")
                     fig, ax = plt.subplots()
-                    sns.boxplot(x=factors[0], y='satisfaction', hue=factors[1], data=df)
-                    ax.set_title(f"Interaction Effect: {factors[0].strip('`')} × {factors[1].strip('`')}")
-                    ax.set_xlabel(f" {factors[0].strip('`')} / {factors[0].strip('`')}")
+                    sns.boxplot(x=var1.strip('C(`'), y='satisfaction', hue=var2.strip('C(`'), data=df)
+                    ax.set_title(f"Interaction Effect: {var1.strip('C(`')} × {var2.strip('C(`')}")
+                    ax.set_xlabel(f"{var1.strip('C(`')} / {var1.strip('C(`')}")
                     ax.set_ylabel("Satisfaction Score / درجة الرضا")
                     st.pyplot(fig)
                 else:
                     # Main effect
-                    st.write(f"**Factor: {factor.strip('`')} / العامل: {factor.strip('`')}**")
+                    var = factor.strip('C(`').strip('`)')
+                    st.write(f"**Factor: {var} / العامل: {var}**")
                     fig, ax = plt.subplots()
-                    sns.boxplot(x=factor, y='satisfaction', data=df)
-                    ax.set_title(f"Effect of {factor.strip('`')} on Satisfaction / تأثير {factor.strip('`')} على الرضا")
-                    ax.set_xlabel(f"{factor.strip('`')} / {factor.strip('`')}")
+                    sns.boxplot(x=var, y='satisfaction', data=df)
+                    ax.set_title(f"Effect of {var} on Satisfaction / تأثير {var} على الرضا")
+                    ax.set_xlabel(f"{var} / {var}")
                     ax.set_ylabel("Satisfaction Score / درجة الرضا")
                     st.pyplot(fig)
         else:

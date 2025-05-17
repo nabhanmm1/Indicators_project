@@ -612,7 +612,17 @@ def bayesian_adaptive_methodology(lang='en'):
     st.markdown(translations[lang]['bayesian_adaptive_methodology_markdown_3.1_content'])
     st.subheader(translations[lang]["bayesian_adaptive_methodology_subheader_3.2"])
     st.markdown(translations[lang]['bayesian_adaptive_methodology_markdown_3.2_content'])
-    st.image("https_miro.medium.com_v2_resize_fit_1400_1__f_xL41kP9n2_n3L9yY0gLg.png", caption=translations[lang]["bayesian_adaptive_methodology_image_caption"])
+
+    # CORRECTED IMAGE URL AND ERROR HANDLING:
+    correct_image_url = "https://miro.medium.com/v2/resize:fit:1400/1*_f_xL41kP9n2_n3L9yY0gLg.png"
+    try:
+        st.image(correct_image_url, caption=translations[lang]["bayesian_adaptive_methodology_image_caption"])
+    except Exception as e:
+        error_message_en = f"Error loading image. Please check the URL or network connectivity. (URL: {correct_image_url})"
+        error_message_ar = f"خطأ في تحميل الصورة. يرجى التحقق من عنوان URL أو الاتصال بالشبكة. (الرابط: {correct_image_url})"
+        st.error(error_message_ar if lang == 'ar' else error_message_en)
+        # st.warning(f"Image loading details: {e}") # Uncomment for debugging if needed
+
     st.subheader(translations[lang]["bayesian_adaptive_methodology_subheader_3.3"])
     st.markdown(translations[lang]['bayesian_adaptive_methodology_markdown_3.3_content'])
     st.subheader(translations[lang]["bayesian_adaptive_methodology_subheader_3.4"])
@@ -834,12 +844,12 @@ if current_lang == 'ar':
                 direction: rtl !important;
             }
             /* Correct alignment for expander headers */
-            .st-expanderHeader {
+            .st-expanderHeader { /* May need adjustment based on actual Streamlit version class */
                 direction: rtl !important;
                 text-align: right !important;
             }
             /* Slider labels */
-            .stSlider label {
+            .stSlider label { /* Slider label text */
                  direction: rtl !important;
                  text-align: right !important;
                  width: 100% !important; /* Make label take full width to align text right */

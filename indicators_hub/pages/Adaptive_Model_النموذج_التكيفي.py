@@ -618,7 +618,7 @@ def bayesian_adaptive_methodology(lang='en'):
     # 1. Download the image from: https://www.google.com/url?sa=E&source=gmail&q=https://miro.medium.com/v2/resize:fit:1400/1*_f_xL41kP9n2_n3L9yY0gLg.png
     # 2. Save it as 'bayesian_flow_image.png' in the same directory as your script,
     #    or in an 'assets' subdirectory (then use "assets/bayesian_flow_image.png").
-    local_image_path = "bayesian_theorem_flow.png" # Update if you use a subdirectory
+    local_image_path = "bayes_theorem_flow.png" # Update if you use a subdirectory
     try:
         st.image(local_image_path, caption=translations[lang]["bayesian_adaptive_methodology_image_caption"])
     except Exception as e:

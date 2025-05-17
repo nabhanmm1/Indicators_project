@@ -54,6 +54,7 @@ def get_credible_interval(alpha, beta, conf_level=0.95):
     return stats.beta.interval(conf_level, alpha, beta)
 
 # --- Translation Dictionary ---
+# Ensure LaTeX within these strings is correct and use raw strings for the entire markdown content.
 translations = {
     "en": {
         "page_title": "Proposal: Adaptive Bayesian Estimation for Pilgrim Satisfaction Surveys",
@@ -70,13 +71,13 @@ translations = {
             "7. Conclusion": "7. Conclusion"
         },
         "introduction_objectives_header": "1. Introduction & Objectives",
-        "introduction_objectives_markdown_1": """
+        "introduction_objectives_markdown_1": r"""
 This proposal outlines an **Adaptive Bayesian Estimation framework** designed to enhance the process of gathering and analyzing survey data for Hajj pilgrim satisfaction and the assessment of services provided by various companies.
 
 The current practice of developing satisfaction metrics month over month faces complexities, such as delays in pilgrim arrivals or non-uniformity across different months, making it difficult to consistently achieve high-confidence and low-error confidence intervals for key indicators. This proposal aims to introduce a more dynamic, efficient, and robust methodology.
 """,
         "introduction_objectives_subheader_1.1": "1.1. Primary Objectives",
-        "introduction_objectives_markdown_1.1_content": """
+        "introduction_objectives_markdown_1.1_content": r"""
 The core objectives of implementing this adaptive Bayesian framework are:
 
 * **Achieve Desired Precision Efficiently:** To obtain satisfaction metrics and service provider assessments with pre-defined levels of precision (i.e., narrow credible intervals at a specific confidence level) using optimized sample sizes.
@@ -87,7 +88,7 @@ The core objectives of implementing this adaptive Bayesian framework are:
 * **Enhanced Subgroup Analysis:** To facilitate more reliable analysis of specific pilgrim subgroups or service aspects by adaptively ensuring sufficient data is collected for these segments.
 """,
         "challenges_addressed_header": "2. Challenges Addressed by this Methodology",
-        "challenges_addressed_markdown": """
+        "challenges_addressed_markdown": r"""
 The proposed Bayesian adaptive estimation framework directly addresses several key challenges currently faced in the Hajj survey process:
 
 * **Difficulty in Obtaining Stable Confidence Intervals:**
@@ -115,7 +116,7 @@ The proposed Bayesian adaptive estimation framework directly addresses several k
     * **Bayesian Solution:** The adaptive approach helps prioritize data collection where uncertainty is highest and the need for precision is greatest, leading to more optimal resource allocation.
 """,
         "bayesian_adaptive_methodology_header": "3. Core Methodology: Bayesian Adaptive Estimation",
-        "bayesian_adaptive_methodology_markdown_intro": """
+        "bayesian_adaptive_methodology_markdown_intro": r"""
 The Bayesian adaptive estimation framework is an iterative process that leverages Bayes' theorem to update our beliefs about pilgrim satisfaction or service performance as new survey data is collected. This allows for dynamic adjustments to the sampling strategy.
 """,
         "bayesian_adaptive_methodology_subheader_3.1": "3.1. Fundamental Concepts",
@@ -131,7 +132,7 @@ At its heart, Bayesian inference combines prior knowledge with observed data to 
 * **Credible Interval:** In Bayesian statistics, a credible interval is a range of values that contains the parameter $\theta$ with a certain probability (e.g., 95%). This is a direct probabilistic statement about the parameter, unlike the frequentist confidence interval.
 """,
         "bayesian_adaptive_methodology_subheader_3.2": "3.2. The Iterative Process",
-        "bayesian_adaptive_methodology_markdown_3.2_content": """
+        "bayesian_adaptive_methodology_markdown_3.2_content": r"""
 The adaptive methodology follows these steps:
 1.  **Initialization:**
     * Define the parameter(s) of interest (e.g., satisfaction with lodging, food, logistics for a specific company).
@@ -194,7 +195,7 @@ The decision to continue sampling is based on whether the current credible inter
 The tool should aim to provide guidance on a reasonable next batch size based on the current uncertainty and the distance to the target precision.
 """,
         "bayesian_adaptive_methodology_subheader_3.5": "3.5. Handling Data Heterogeneity Over Time",
-        "bayesian_adaptive_methodology_markdown_3.5_content": """
+        "bayesian_adaptive_methodology_markdown_3.5_content": r"""
 A key challenge is that service provider performance or general pilgrim satisfaction might change over time. Using historical data uncritically as a prior might be misleading if changes have occurred.
 
 * **The "Learning Hyperparameter" (Discount Factor / Power Prior):**
@@ -216,7 +217,7 @@ A key challenge is that service provider performance or general pilgrim satisfac
 The choice of method depends on the complexity deemed appropriate and the available data. Starting with a discount factor is often a pragmatic first step.
 """,
         "implementation_roadmap_header": "4. Implementation Roadmap (Conceptual)",
-        "implementation_roadmap_markdown": """
+        "implementation_roadmap_markdown": r"""
 Implementing the Bayesian adaptive estimation framework involves several key stages:
 """,
         "roadmap_df_phase_col": "Phase",
@@ -243,7 +244,7 @@ Implementing the Bayesian adaptive estimation framework involves several key sta
         },
         "note_to_practitioners_header": "5. Note to Practitioners",
         "note_to_practitioners_subheader_5.1": "5.1. Benefits of the Bayesian Adaptive Approach",
-        "note_to_practitioners_markdown_5.1_content": """
+        "note_to_practitioners_markdown_5.1_content": r"""
 * **Efficiency:** Targets sampling effort where it's most needed, potentially reducing overall sample sizes compared to fixed methods while achieving desired precision.
 * **Adaptability:** Responds to incoming data, making it suitable for dynamic environments where satisfaction might fluctuate or where initial knowledge is low.
 * **Formal Use of Prior Knowledge:** Allows systematic incorporation of historical data or expert insights, which can be particularly useful with sparse initial data for new services or specific subgroups.
@@ -251,7 +252,7 @@ Implementing the Bayesian adaptive estimation framework involves several key sta
 * **Rich Output:** Provides a full posterior distribution for each parameter, offering more insight than just a point estimate and an interval.
 """,
         "note_to_practitioners_subheader_5.2": "5.2. Limitations and Considerations",
-        "note_to_practitioners_markdown_5.2_content": """
+        "note_to_practitioners_markdown_5.2_content": r"""
 * **Complexity:** Bayesian methods can be conceptually more demanding than traditional frequentist approaches. Implementation requires specialized knowledge.
 * **Prior Selection:** The choice of prior distribution can influence posterior results, especially with small sample sizes. This requires careful justification and transparency. While "uninformative" priors aim to minimize this influence, truly uninformative priors are not always straightforward.
 * **Computational Cost:** While Beta-Binomial models are computationally simple, more complex Bayesian models (e.g., hierarchical models, models requiring MCMC simulation) can be computationally intensive.
@@ -259,14 +260,14 @@ Implementing the Bayesian adaptive estimation framework involves several key sta
 * **"Black Box" Perception:** If not explained clearly, the adaptive nature and Bayesian calculations might be perceived as a "black box" by those unfamiliar with the methods. Clear communication is key.
 """,
         "note_to_practitioners_subheader_5.3": "5.3. Key Assumptions",
-        "note_to_practitioners_markdown_5.3_content": """
+        "note_to_practitioners_markdown_5.3_content": r"""
 * **Representativeness of Samples:** Each batch of collected data is assumed to be representative of the (sub)population of interest *at that point in time*. Sampling biases will affect the validity of estimates.
 * **Model Appropriateness:** The chosen likelihood and prior distributions should reasonably reflect the data-generating process and existing knowledge. For satisfaction proportions, the Beta-Binomial model is often robust.
 * **Stability (or Modeled Change):** The underlying parameter being measured (e.g., satisfaction rate) is assumed to be relatively stable between iterative updates within a survey wave, OR changes are explicitly modeled (e.g., via discount factors or dynamic models). Rapid, unmodeled fluctuations can be challenging.
 * **Accurate Data:** Assumes responses are truthful and accurately recorded.
 """,
         "note_to_practitioners_subheader_5.4": "5.4. Practical Recommendations",
-        "note_to_practitioners_markdown_5.4_content": """
+        "note_to_practitioners_markdown_5.4_content": r"""
 * **Start Simple:** Begin with core satisfaction metrics and simple models (like Beta-Binomial). Complexity can be added iteratively as experience is gained.
 * **Invest in Training:** Ensure that the team involved in implementing and interpreting the results has adequate training in Bayesian statistics.
 * **Transparency is Key:** Document choices for priors, models, and adaptive rules. Perform sensitivity analyses to understand the impact of different prior choices, especially in early stages or with limited data.
@@ -275,23 +276,23 @@ Implementing the Bayesian adaptive estimation framework involves several key sta
 * **Pilot Thoroughly:** Before full-scale implementation, conduct thorough pilot studies to refine the process, test the technology, and identify unforeseen challenges.
 """,
         "interactive_illustration_header": "6. Interactive Illustration: Beta-Binomial Model",
-        "interactive_illustration_markdown_intro": """
+        "interactive_illustration_markdown_intro": r"""
 This section provides a simple interactive illustration of how a Beta prior is updated to a Beta posterior with new data (Binomial likelihood). This is the core of estimating a proportion (e.g., satisfaction rate) in a Bayesian way.
 """,
         "interactive_illustration_prior_beliefs_header": "Prior Beliefs",
-        "interactive_illustration_prior_beliefs_markdown": "The Beta distribution $Beta(\\alpha, \\beta)$ is a common prior for proportions. $\\alpha$ can be thought of as prior 'successes' and $\\beta$ as prior 'failures'. $Beta(1,1)$ is a uniform (uninformative) prior.",
+        "interactive_illustration_prior_beliefs_markdown": r"The Beta distribution $Beta(\alpha, \beta)$ is a common prior for proportions. $\alpha$ can be thought of as prior 'successes' and $\beta$ as prior 'failures'. $Beta(1,1)$ is a uniform (uninformative) prior.",
         "interactive_illustration_prior_alpha_label": "Prior Alpha (α₀)",
         "interactive_illustration_prior_beta_label": "Prior Beta (β₀)",
         "interactive_illustration_prior_mean_label": "Prior Mean",
         "interactive_illustration_prior_ci_label": "95% Credible Interval (Prior)",
         "interactive_illustration_width_label": "Width",
         "interactive_illustration_new_data_header": "New Survey Data (Likelihood)",
-        "interactive_illustration_new_data_markdown": "Enter the results from a new batch of surveys.",
+        "interactive_illustration_new_data_markdown": r"Enter the results from a new batch of surveys.",
         "interactive_illustration_num_surveys_label": "Number of New Surveys (n)",
         "interactive_illustration_num_satisfied_label": "Number Satisfied in New Surveys (k)",
         "interactive_illustration_observed_satisfaction_label": "Observed Satisfaction in New Data",
         "interactive_illustration_posterior_beliefs_header": "Posterior Beliefs (After Update)",
-        "interactive_illustration_posterior_markdown": "The posterior distribution is $Beta(\\alpha_0 + k, \\beta_0 + n - k) = Beta({posterior_alpha:.1f}, {posterior_beta:.1f})$",
+        "interactive_illustration_posterior_markdown": r"The posterior distribution is $Beta(\alpha_0 + k, \beta_0 + n - k) = Beta({posterior_alpha:.1f}, {posterior_beta:.1f})$",
         "interactive_illustration_posterior_mean_label": "Posterior Mean",
         "interactive_illustration_posterior_ci_label": "95% Credible Interval (Posterior)",
         "interactive_illustration_target_width_label": "Target Credible Interval Width for Stopping",
@@ -301,7 +302,7 @@ This section provides a simple interactive illustration of how a Beta prior is u
         "interactive_illustration_plot_xlabel": "Satisfaction Rate (θ)",
         "interactive_illustration_plot_ylabel": "Density",
         "interactive_illustration_discounting_header": "Conceptual Illustration: Impact of Discounting Older Data",
-        "interactive_illustration_discounting_markdown": """
+        "interactive_illustration_discounting_markdown": r"""
 This illustrates how a discount factor might change the influence of 'old' posterior data when it's used to form a prior for a 'new' period.
 Assume the 'Posterior' calculated above is now 'Old Data' from a previous period.
 We want to form a new prior for the upcoming period.
@@ -311,11 +312,11 @@ An 'Initial Prior' (e.g., $Beta(1,1)$) represents a baseline, less informative b
         "interactive_illustration_discount_factor_help": "Controls weight of old data. 1.0 = full weight, 0.0 = discard old data, rely only on initial prior.",
         "interactive_illustration_initial_prior_alpha_discount_label": "Initial Prior Alpha (for new period if discounting heavily)",
         "interactive_illustration_initial_prior_beta_discount_label": "Initial Prior Beta (for new period if discounting heavily)",
-        "interactive_illustration_new_prior_discount_label": "New Prior for Next Period: $Beta({new_prior_alpha:.2f}, {new_prior_beta:.2f})$",
+        "interactive_illustration_new_prior_discount_label": r"New Prior for Next Period: $Beta({new_prior_alpha:.2f}, {new_prior_beta:.2f})$",
         "interactive_illustration_new_prior_mean_discount_label": "Mean of New Prior",
         "interactive_illustration_plot2_title": "Forming a New Prior with Discounting",
         "conclusion_header": "7. Conclusion",
-        "conclusion_markdown": """
+        "conclusion_markdown": r"""
 The proposed Bayesian adaptive estimation framework offers a sophisticated, flexible, and efficient approach to analyzing pilgrim satisfaction surveys. By iteratively updating beliefs and dynamically adjusting sampling efforts, this methodology promises more precise and timely insights, enabling better-informed decision-making for enhancing the Hajj experience.
 
 While it introduces new concepts and requires careful implementation, the long-term benefits—including optimized resource use and a deeper understanding of satisfaction dynamics—are substantial. This proposal advocates for a phased implementation, starting with core metrics and gradually building complexity and scope.
@@ -338,13 +339,13 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
             "7. Conclusion": "٧. الخاتمة"
         },
         "introduction_objectives_header": "١. المقدمة والأهداف",
-        "introduction_objectives_markdown_1": """
+        "introduction_objectives_markdown_1": r"""
 يطرح هذا المقترح إطار **تقدير Bayesian التكيفي** المصمم لتعزيز عملية جمع وتحليل بيانات الاستطلاع المتعلقة برضا حجاج بيت الله الحرام وتقييم الخدمات المقدمة من قبل مختلف الشركات.
 
 تواجه الممارسة الحالية لتطوير مقاييس الرضا شهراً بعد شهر تعقيدات، مثل التأخير في وصول الحجاج أو عدم التوحيد عبر الأشهر المختلفة، مما يجعل من الصعب تحقيق فترات ثقة (confidence intervals) عالية ومعدلات خطأ منخفضة للمؤشرات الرئيسية بشكل مستمر. يهدف هذا المقترح إلى تقديم منهجية أكثر ديناميكية وكفاءة وقوة.
 """,
         "introduction_objectives_subheader_1.1": "١.١. الأهداف الأساسية",
-        "introduction_objectives_markdown_1.1_content": """
+        "introduction_objectives_markdown_1.1_content": r"""
 تتمثل الأهداف الأساسية لتطبيق إطار Bayesian التكيفي هذا في:
 
 * **تحقيق الدقة المطلوبة بكفاءة:** الحصول على مقاييس الرضا وتقييمات مقدمي الخدمات بمستويات دقة محددة مسبقًا (أي، فترات موثوقية (credible intervals) ضيقة عند مستوى ثقة معين) باستخدام أحجام عينات مُحسَّنة.
@@ -355,7 +356,7 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
 * **تحليل محسن للمجموعات الفرعية:** تسهيل تحليل أكثر موثوقية للمجموعات الفرعية المحددة من الحجاج أو جوانب الخدمة من خلال ضمان جمع بيانات كافية لهذه الشرائح بشكل تكيفي.
 """,
         "challenges_addressed_header": "٢. التحديات التي تعالجها هذه المنهجية",
-        "challenges_addressed_markdown": """
+        "challenges_addressed_markdown": r"""
 يعالج إطار تقدير Bayesian التكيفي المقترح بشكل مباشر العديد من التحديات الرئيسية التي تواجه حاليًا عملية استطلاع الحج:
 
 * **صعوبة الحصول على فترات ثقة مستقرة:**
@@ -383,7 +384,7 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
     * **حل Bayesian:** يساعد النهج التكيفي في تحديد أولويات جمع البيانات حيث يكون عدم اليقين هو الأعلى والحاجة إلى الدقة هي الأكبر، مما يؤدي إلى تخصيص موارد أكثر مثالية.
 """,
         "bayesian_adaptive_methodology_header": "٣. المنهجية الأساسية: تقدير Bayesian التكيفي",
-        "bayesian_adaptive_methodology_markdown_intro": """
+        "bayesian_adaptive_methodology_markdown_intro": r"""
 إطار تقدير Bayesian التكيفي هو عملية تكرارية تستفيد من نظرية Bayes لتحديث معتقداتنا حول رضا الحجاج أو أداء الخدمة عند جمع بيانات استطلاع جديدة. وهذا يسمح بإجراء تعديلات ديناميكية على استراتيجية أخذ العينات.
 """,
         "bayesian_adaptive_methodology_subheader_3.1": "٣.١. المفاهيم الأساسية",
@@ -399,7 +400,7 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
 * **فترة الموثوقية (Credible Interval):** في إحصاءات Bayesian، فترة الموثوقية هي نطاق من القيم يحتوي على المُعلمة $\theta$ باحتمال معين (على سبيل المثال، 95%). هذا بيان احتمالي مباشر حول المُعلمة، على عكس فترة الثقة (confidence interval) في الإحصاء التكراري.
 """,
         "bayesian_adaptive_methodology_subheader_3.2": "٣.٢. العملية التكرارية",
-        "bayesian_adaptive_methodology_markdown_3.2_content": """
+        "bayesian_adaptive_methodology_markdown_3.2_content": r"""
 تتبع المنهجية التكيفية الخطوات التالية:
 ١.  **التهيئة:**
     * تحديد المُعلمة (المُعلمات) محل الاهتمام (على سبيل المثال، الرضا عن السكن، الطعام، الخدمات اللوجستية لشركة معينة).
@@ -462,7 +463,7 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
 يجب أن تهدف الأداة إلى تقديم إرشادات بشأن حجم الدفعة التالية المعقول بناءً على عدم اليقين الحالي والمسافة إلى الدقة المستهدفة.
 """,
         "bayesian_adaptive_methodology_subheader_3.5": "٣.٥. التعامل مع عدم تجانس البيانات بمرور الوقت",
-        "bayesian_adaptive_methodology_markdown_3.5_content": """
+        "bayesian_adaptive_methodology_markdown_3.5_content": r"""
 أحد التحديات الرئيسية هو أن أداء مقدمي الخدمات أو رضا الحجاج بشكل عام قد يتغير بمرور الوقت. قد يكون استخدام البيانات التاريخية بشكل غير نقدي كتوزيع أولي مضللاً إذا حدثت تغييرات.
 
 * **"مُعلمة التعلم الفائقة" (عامل الخصم / Power Prior):**
@@ -484,7 +485,7 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
 يعتمد اختيار الطريقة على مدى التعقيد الذي يعتبر مناسبًا والبيانات المتاحة. غالبًا ما يكون البدء بعامل الخصم خطوة أولى عملية.
 """,
         "implementation_roadmap_header": "٤. خارطة طريق التنفيذ (مفاهيمية)",
-        "implementation_roadmap_markdown": """
+        "implementation_roadmap_markdown": r"""
 يتضمن تنفيذ إطار تقدير Bayesian التكيفي عدة مراحل رئيسية:
 """,
         "roadmap_df_phase_col": "المرحلة",
@@ -511,7 +512,7 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
         },
         "note_to_practitioners_header": "٥. ملاحظات للممارسين",
         "note_to_practitioners_subheader_5.1": "٥.١. فوائد نهج Bayesian التكيفي",
-        "note_to_practitioners_markdown_5.1_content": """
+        "note_to_practitioners_markdown_5.1_content": r"""
 * **الكفاءة:** يوجه جهد أخذ العينات حيث تشتد الحاجة إليه، مما قد يقلل من أحجام العينات الإجمالية مقارنة بالطرق الثابتة مع تحقيق الدقة المطلوبة.
 * **القدرة على التكيف:** يستجيب للبيانات الواردة، مما يجعله مناسبًا للبيئات الديناميكية حيث قد يتقلب الرضا أو حيث تكون المعرفة الأولية منخفضة.
 * **الاستخدام الرسمي للمعرفة المسبقة:** يسمح بالدمج المنهجي للبيانات التاريخية أو رؤى الخبراء، والتي يمكن أن تكون مفيدة بشكل خاص مع البيانات الأولية المتفرقة للخدمات الجديدة أو المجموعات الفرعية المحددة.
@@ -519,7 +520,7 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
 * **مخرجات غنية:** يوفر توزيعًا لاحقًا كاملاً لكل مُعلمة، مما يوفر رؤية أعمق من مجرد تقدير نقطي وفترة.
 """,
         "note_to_practitioners_subheader_5.2": "٥.٢. القيود والاعتبارات",
-        "note_to_practitioners_markdown_5.2_content": """
+        "note_to_practitioners_markdown_5.2_content": r"""
 * **التعقيد:** يمكن أن تكون طرق Bayesian أكثر تطلبًا من الناحية المفاهيمية من الأساليب التكرارية التقليدية. يتطلب التنفيذ معرفة متخصصة.
 * **اختيار التوزيع الأولي:** يمكن أن يؤثر اختيار التوزيع الأولي على النتائج اللاحقة، خاصة مع أحجام العينات الصغيرة. يتطلب هذا تبريرًا دقيقًا وشفافية. بينما تهدف التوزيعات الأولية "غير المُعلِمة" إلى تقليل هذا التأثير، فإن التوزيعات الأولية غير المُعلِمة حقًا ليست دائمًا واضحة ومباشرة.
 * **التكلفة الحسابية:** بينما تعتبر نماذج Beta-Binomial بسيطة حسابيًا، فإن نماذج Bayesian الأكثر تعقيدًا (مثل النماذج الهرمية، النماذج التي تتطلب محاكاة MCMC) يمكن أن تكون كثيفة حسابيًا.
@@ -527,14 +528,14 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
 * **تصور "الصندوق الأسود":** إذا لم يتم شرحها بوضوح، فقد يُنظر إلى الطبيعة التكيفية وحسابات Bayesian على أنها "صندوق أسود" من قبل أولئك غير المطلعين على الطرق. التواصل الواضح هو المفتاح.
 """,
         "note_to_practitioners_subheader_5.3": "٥.٣. الافتراضات الرئيسية",
-        "note_to_practitioners_markdown_5.3_content": """
+        "note_to_practitioners_markdown_5.3_content": r"""
 * **تمثيلية العينات:** يُفترض أن كل دفعة من البيانات المجمعة تمثل المجتمع (الفرعي) محل الاهتمام *في تلك اللحظة الزمنية*. ستؤثر تحيزات أخذ العينات على صحة التقديرات.
 * **ملاءمة النموذج:** يجب أن تعكس دالة الإمكان والتوزيعات الأولية المختارة بشكل معقول عملية توليد البيانات والمعرفة الحالية. بالنسبة لنسب الرضا، غالبًا ما يكون نموذج Beta-Binomial قويًا.
 * **الاستقرار (أو التغيير المنمذج):** يُفترض أن المُعلمة الأساسية التي يتم قياسها (مثل معدل الرضا) مستقرة نسبيًا بين التحديثات التكرارية داخل موجة المسح، أو يتم نمذجة التغييرات بشكل صريح (على سبيل المثال، عبر عوامل الخصم أو النماذج الديناميكية). يمكن أن تكون التقلبات السريعة غير المنمذجة صعبة.
 * **دقة البيانات:** يفترض أن الردود صادقة ومسجلة بدقة.
 """,
         "note_to_practitioners_subheader_5.4": "٥.٤. توصيات عملية",
-        "note_to_practitioners_markdown_5.4_content": """
+        "note_to_practitioners_markdown_5.4_content": r"""
 * **ابدأ ببساطة:** ابدأ بمقاييس الرضا الأساسية والنماذج البسيطة (مثل Beta-Binomial). يمكن إضافة التعقيد بشكل متكرر مع اكتساب الخبرة.
 * **استثمر في التدريب:** تأكد من أن الفريق المشارك في تنفيذ وتفسير النتائج لديه تدريب كافٍ في إحصاءات Bayesian.
 * **الشفافية هي المفتاح:** وثق الخيارات المتعلقة بالتوزيعات الأولية والنماذج والقواعد التكيفية. قم بإجراء تحليلات الحساسية لفهم تأثير اختيارات التوزيعات الأولية المختلفة، خاصة في المراحل المبكرة أو مع بيانات محدودة.
@@ -543,23 +544,23 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
 * **الاختبار التجريبي الشامل:** قبل التنفيذ على نطاق كامل، قم بإجراء دراسات تجريبية شاملة لتحسين العملية واختبار التكنولوجيا وتحديد التحديات غير المتوقعة.
 """,
         "interactive_illustration_header": "٦. توضيح تفاعلي: نموذج Beta-Binomial",
-        "interactive_illustration_markdown_intro": """
+        "interactive_illustration_markdown_intro": r"""
 يقدم هذا القسم توضيحًا تفاعليًا بسيطًا لكيفية تحديث توزيع Beta الأولي إلى توزيع Beta لاحق ببيانات جديدة (دالة الإمكان Binomial). هذا هو جوهر تقدير نسبة (مثل معدل الرضا) بطريقة Bayesian.
 """,
         "interactive_illustration_prior_beliefs_header": "المعتقدات الأولية",
-        "interactive_illustration_prior_beliefs_markdown": "توزيع Beta $Beta(\\alpha, \\beta)$ هو توزيع أولي شائع للنسب. يمكن اعتبار $\\alpha$ بمثابة 'النجاحات' الأولية و $\\beta$ بمثابة 'الإخفاقات' الأولية. $Beta(1,1)$ هو توزيع أولي منتظم (غير مُعلِم).",
+        "interactive_illustration_prior_beliefs_markdown": r"توزيع Beta $Beta(\alpha, \beta)$ هو توزيع أولي شائع للنسب. يمكن اعتبار $\alpha$ بمثابة 'النجاحات' الأولية و $\beta$ بمثابة 'الإخفاقات' الأولية. $Beta(1,1)$ هو توزيع أولي منتظم (غير مُعلِم).",
         "interactive_illustration_prior_alpha_label": "Prior Alpha (α₀)",
         "interactive_illustration_prior_beta_label": "Prior Beta (β₀)",
         "interactive_illustration_prior_mean_label": "المتوسط الأولي",
         "interactive_illustration_prior_ci_label": "فترة الموثوقية 95% (الأولية)",
         "interactive_illustration_width_label": "العرض",
         "interactive_illustration_new_data_header": "بيانات الاستطلاع الجديدة (دالة الإمكان)",
-        "interactive_illustration_new_data_markdown": "أدخل النتائج من دفعة جديدة من الاستطلاعات.",
+        "interactive_illustration_new_data_markdown": r"أدخل النتائج من دفعة جديدة من الاستطلاعات.",
         "interactive_illustration_num_surveys_label": "عدد الاستطلاعات الجديدة (n)",
         "interactive_illustration_num_satisfied_label": "عدد الراضين في الاستطلاعات الجديدة (k)",
         "interactive_illustration_observed_satisfaction_label": "الرضا الملاحظ في البيانات الجديدة",
         "interactive_illustration_posterior_beliefs_header": "المعتقدات اللاحقة (بعد التحديث)",
-        "interactive_illustration_posterior_markdown": "التوزيع اللاحق هو $Beta(\\alpha_0 + k, \\beta_0 + n - k) = Beta({posterior_alpha:.1f}, {posterior_beta:.1f})$",
+        "interactive_illustration_posterior_markdown": r"التوزيع اللاحق هو $Beta(\alpha_0 + k, \beta_0 + n - k) = Beta({posterior_alpha:.1f}, {posterior_beta:.1f})$",
         "interactive_illustration_posterior_mean_label": "المتوسط اللاحق",
         "interactive_illustration_posterior_ci_label": "فترة الموثوقية 95% (اللاحقة)",
         "interactive_illustration_target_width_label": "عرض فترة الموثوقية المستهدف للإيقاف",
@@ -569,7 +570,7 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
         "interactive_illustration_plot_xlabel": "معدل الرضا (θ)",
         "interactive_illustration_plot_ylabel": "الكثافة",
         "interactive_illustration_discounting_header": "توضيح مفاهيمي: تأثير خصم البيانات الأقدم",
-        "interactive_illustration_discounting_markdown": """
+        "interactive_illustration_discounting_markdown": r"""
 يوضح هذا كيف يمكن لعامل الخصم أن يغير تأثير بيانات التوزيع اللاحق 'القديمة' عند استخدامها لتشكيل توزيع أولي لفترة 'جديدة'.
 افترض أن 'التوزيع اللاحق' المحسوب أعلاه هو الآن 'بيانات قديمة' من فترة سابقة.
 نريد تكوين توزيع أولي جديد للفترة القادمة.
@@ -579,11 +580,11 @@ We recommend proceeding with a pilot project to demonstrate the practical benefi
         "interactive_illustration_discount_factor_help": "يتحكم في وزن البيانات القديمة. 1.0 = الوزن الكامل، 0.0 = تجاهل البيانات القديمة، والاعتماد فقط على التوزيع الأولي المبدئي.",
         "interactive_illustration_initial_prior_alpha_discount_label": "Initial Prior Alpha (لفترة جديدة إذا كان الخصم كبيرًا)",
         "interactive_illustration_initial_prior_beta_discount_label": "Initial Prior Beta (لفترة جديدة إذا كان الخصم كبيرًا)",
-        "interactive_illustration_new_prior_discount_label": "التوزيع الأولي الجديد للفترة التالية: $Beta({new_prior_alpha:.2f}, {new_prior_beta:.2f})$",
+        "interactive_illustration_new_prior_discount_label": r"التوزيع الأولي الجديد للفترة التالية: $Beta({new_prior_alpha:.2f}, {new_prior_beta:.2f})$",
         "interactive_illustration_new_prior_mean_discount_label": "متوسط التوزيع الأولي الجديد",
         "interactive_illustration_plot2_title": "تكوين توزيع أولي جديد مع الخصم",
         "conclusion_header": "٧. الخاتمة",
-        "conclusion_markdown": """
+        "conclusion_markdown": r"""
 يقدم إطار تقدير Bayesian التكيفي المقترح نهجًا متطورًا ومرنًا وفعالًا لتحليل استطلاعات رضا الحجاج. من خلال تحديث المعتقدات بشكل متكرر وتعديل جهود أخذ العينات ديناميكيًا، تعد هذه المنهجية بتقديم رؤى أكثر دقة وفي الوقت المناسب، مما يتيح اتخاذ قرارات أفضل استنارة لتعزيز تجربة الحج.
 
 في حين أنه يقدم مفاهيم جديدة ويتطلب تنفيذًا دقيقًا، فإن الفوائد طويلة الأجل - بما في ذلك الاستخدام الأمثل للموارد والفهم الأعمق لديناميكيات الرضا - كبيرة. يدعو هذا المقترح إلى تنفيذ مرحلي، يبدأ بالمقاييس الأساسية ويبني تدريجيًا التعقيد والنطاق.
@@ -613,15 +614,19 @@ def bayesian_adaptive_methodology(lang='en'):
     st.subheader(translations[lang]["bayesian_adaptive_methodology_subheader_3.2"])
     st.markdown(translations[lang]['bayesian_adaptive_methodology_markdown_3.2_content'])
 
-    # CORRECTED IMAGE URL AND ERROR HANDLING:
-    correct_image_url = "https://miro.medium.com/v2/resize:fit:1400/1*_f_xL41kP9n2_n3L9yY0gLg.png"
+    # IMAGE HANDLING: Using a local image.
+    # 1. Download the image from: https://www.google.com/url?sa=E&source=gmail&q=https://miro.medium.com/v2/resize:fit:1400/1*_f_xL41kP9n2_n3L9yY0gLg.png
+    # 2. Save it as 'bayesian_flow_image.png' in the same directory as your script,
+    #    or in an 'assets' subdirectory (then use "assets/bayesian_flow_image.png").
+    local_image_path = "bayesian_flow_image.png" # Update if you use a subdirectory
     try:
-        st.image(correct_image_url, caption=translations[lang]["bayesian_adaptive_methodology_image_caption"])
+        st.image(local_image_path, caption=translations[lang]["bayesian_adaptive_methodology_image_caption"])
     except Exception as e:
-        error_message_en = f"Error loading image. Please check the URL or network connectivity. (URL: {correct_image_url})"
-        error_message_ar = f"خطأ في تحميل الصورة. يرجى التحقق من عنوان URL أو الاتصال بالشبكة. (الرابط: {correct_image_url})"
+        error_message_en = f"Error loading local image '{local_image_path}'. Please ensure the file exists in the correct path."
+        error_message_ar = f"خطأ في تحميل الصورة المحلية '{local_image_path}'. يرجى التأكد من وجود الملف في المسار الصحيح."
         st.error(error_message_ar if lang == 'ar' else error_message_en)
-        # st.warning(f"Image loading details: {e}") # Uncomment for debugging if needed
+        st.info(f"Attempted to load image from: {local_image_path}")
+        # st.warning(f"Image loading details: {e}") # Uncomment for more detailed debugging
 
     st.subheader(translations[lang]["bayesian_adaptive_methodology_subheader_3.3"])
     st.markdown(translations[lang]['bayesian_adaptive_methodology_markdown_3.3_content'])

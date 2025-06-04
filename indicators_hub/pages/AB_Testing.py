@@ -399,7 +399,13 @@ def show_introduction_page():
     """)
     st.markdown("---")
     st.subheader("Where This App Fits In")
-    st.markdown("This application aims to be your companion for the critical stages of A/B testing: * Helping you **design robust tests** by calculating the necessary sample size. * Enabling you to **analyze the data** you've collected using both Frequentist and Bayesian statistical approaches. * Guiding you in **interpreting those results** to make informed, data-driven decisions. * Providing **educational content** (like common pitfalls and FAQs) to improve your A/B testing knowledge.")
+    st.markdown("""
+        This application aims to be your companion for the critical stages of A/B testing: 
+        * Helping you **design robust tests** by calculating the necessary sample size. 
+        * Enabling you to **analyze the data** you've collected using both Frequentist and Bayesian statistical approaches. 
+        * Guiding you in **interpreting those results** to make informed, data-driven decisions. 
+        * Providing **educational content** (like common pitfalls and FAQs) to improve your A/B testing knowledge.
+        """)
 
 def show_design_test_page():
     # Page for designing A/B tests, including sample size calculators.

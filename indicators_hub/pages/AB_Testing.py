@@ -467,7 +467,8 @@ def show_design_test_page():
                     st.markdown(r"**Where:** $n$=Sample size per variation, $\sigma$=Standard Deviation, MDE=Absolute difference in means, $Z_{\alpha/2}$=Z-score for $\alpha$, $Z_{\beta}$=Z-score for power.")
     st.markdown("---")
     with st.expander("💡 Understanding Input Impacts on Sample Size"):
-        st.markdown("""Adjusting input parameters affects required sample size. Understanding these trade-offs is key:
+        st.markdown(r"""
+        Adjusting input parameters affects required sample size. Understanding these trade-offs is key:
         * **Baseline Conversion Rate (BCR) / Baseline Mean:**
         * *Binary:* Sample size is largest when BCR is near 50%. It's harder to detect changes for very low or very high BCRs.
         * *Continuous:* The baseline mean itself doesn't directly affect the sample size formula as much as Standard Deviation and MDE do, but understanding it is crucial for setting a meaningful MDE.
